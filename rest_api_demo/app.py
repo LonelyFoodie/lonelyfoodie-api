@@ -6,7 +6,6 @@ from rest_api_demo import settings
 from rest_api_demo.api.blog.endpoints.posts import ns as blog_posts_namespace
 from rest_api_demo.api.blog.endpoints.categories import ns as blog_categories_namespace
 from rest_api_demo.api.restplus import api
-from rest_api_demo.database import db
 
 app = Flask(__name__)
 logging_conf_path = os.path.normpath(os.path.join(os.path.dirname(__file__), '../logging.conf'))
@@ -32,8 +31,6 @@ def initialize_app(flask_app):
     api.add_namespace(blog_posts_namespace)
     api.add_namespace(blog_categories_namespace)
     flask_app.register_blueprint(blueprint)
-
-    db.init_app(flask_app)
 
 
 def main():

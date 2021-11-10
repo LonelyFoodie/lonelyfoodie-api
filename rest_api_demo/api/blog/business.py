@@ -1,4 +1,4 @@
-from rest_api_demo.database import db
+from rest_api_demo.database import use_database
 from rest_api_demo.database.models import Post, Category
 
 
@@ -26,6 +26,12 @@ def delete_post(post_id):
     post = Post.query.filter(Post.id == post_id).one()
     db.session.delete(post)
     db.session.commit()
+
+
+@use_database
+def read_category(db):
+    categories = db.query(Category).all()
+    return categories
 
 
 def create_category(data):
