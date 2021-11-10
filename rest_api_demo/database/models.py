@@ -2,38 +2,28 @@
 # For more information take a look at:
 # http://flask-sqlalchemy.pocoo.org/2.1/quickstart/#simple-relationships
 
-from datetime import datetime
+import uuid
 
-from rest_api_demo.database import db
+from sqlalchemy import Column, String, DateTime, Integer, ForeignKey
+from sqlalchemy.orm import relationship, backref
 
-
-class Post(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(80))
-    body = db.Column(db.Text)
-    pub_date = db.Column(db.DateTime)
-
-    category_id = db.Column(db.Integer, db.ForeignKey('category.id'))
-    category = db.relationship('Category', backref=db.backref('posts', lazy='dynamic'))
-
-    def __init__(self, title, body, category, pub_date=None):
-        self.title = title
-        self.body = body
-        if pub_date is None:
-            pub_date = datetime.utcnow()
-        self.pub_date = pub_date
-        self.category = category
-
-    def __repr__(self):
-        return '<Post %r>' % self.title
+from .base import Base
 
 
-class Category(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(50))
+class Post(Base):
+    __tablename__ = 'posts'
 
-    def __init__(self, name):
-        self.name = name
+    id = Column(String(120), primary_key=True, default=lambda: str(uuid.uuid4()))
+    title = Column(String(80))
+    body = Column(String(2000))
+    pub_date = Column(DateTime())
 
-    def __repr__(self):
-        return '<Category %r>' % self.name
+    category_id = Column(String, ForeignKey('categories.id'))
+    category = relationship('Category', backref=backref('posts', order_by=id))
+
+
+class Category(Base):
+    __tablename__ = 'categories'
+
+    id = Column(String(120), primary_key=True, default=lambda: str(uuid.uuid4()))
+    name = Column(String(50))
