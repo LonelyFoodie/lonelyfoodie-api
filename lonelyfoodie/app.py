@@ -3,8 +3,6 @@ import logging.config
 import os
 from flask import Flask, Blueprint
 from lonelyfoodie import settings
-from lonelyfoodie.api.blog.endpoints.posts import ns as blog_posts_namespace
-from lonelyfoodie.api.blog.endpoints.categories import ns as blog_categories_namespace
 from lonelyfoodie.api.restaurants.endpoints.restaurants import ns as restaurants_namespace
 from lonelyfoodie.api.restplus import api
 
@@ -29,8 +27,6 @@ def initialize_app(flask_app):
 
     blueprint = Blueprint('api', __name__, url_prefix='/api')
     api.init_app(blueprint)
-    api.add_namespace(blog_posts_namespace)
-    api.add_namespace(blog_categories_namespace)
     api.add_namespace(restaurants_namespace)
     flask_app.register_blueprint(blueprint)
 
