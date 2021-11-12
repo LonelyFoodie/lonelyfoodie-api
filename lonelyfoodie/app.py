@@ -2,10 +2,10 @@ import logging.config
 
 import os
 from flask import Flask, Blueprint
-from rest_api_demo import settings
-from rest_api_demo.api.blog.endpoints.posts import ns as blog_posts_namespace
-from rest_api_demo.api.blog.endpoints.categories import ns as blog_categories_namespace
-from rest_api_demo.api.restplus import api
+from lonelyfoodie import settings
+from lonelyfoodie.api.blog.endpoints.posts import ns as blog_posts_namespace
+from lonelyfoodie.api.blog.endpoints.categories import ns as blog_categories_namespace
+from lonelyfoodie.api.restplus import api
 
 app = Flask(__name__)
 logging_conf_path = os.path.normpath(os.path.join(os.path.dirname(__file__), '../logging.conf'))

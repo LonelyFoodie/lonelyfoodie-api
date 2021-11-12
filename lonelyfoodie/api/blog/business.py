@@ -1,5 +1,5 @@
-from rest_api_demo.database import use_database
-from rest_api_demo.database.models import Post, Category
+from lonelyfoodie.database import use_database
+from lonelyfoodie.database.models import Post, Category
 
 
 def create_blog_post(data):
