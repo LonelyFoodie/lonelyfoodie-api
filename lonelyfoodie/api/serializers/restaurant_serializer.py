@@ -12,15 +12,7 @@ restaurant = api.model('Restaurant', {
     'deleted_at': fields.DateTime()
 })
 
-restaurant_create_request = api.model('RestaurantCreate', {
-    'name': fields.String(),
-    'kakaomap_id': fields.String(),
-    'latitude': fields.Float(),
-    'longitude': fields.Float()
-})
-
-restaurant_update_request = api.model('RestaurantUpdate', {
-    'id': fields.String(readOnly=True),
+restaurant_request = api.model('RestaurantCreate', {
     'name': fields.String(),
     'kakaomap_id': fields.String(),
     'latitude': fields.Float(),

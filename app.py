@@ -3,7 +3,7 @@ import logging.config
 import os
 from flask import Flask, Blueprint
 import settings
-from lonelyfoodie.api.restaurants.endpoints.restaurants import ns as restaurants_namespace
+from lonelyfoodie.api.controllers.restaurant_controller import ns as restaurants_namespace
 from lonelyfoodie.api.restplus import api
 
 app = Flask(__name__)
