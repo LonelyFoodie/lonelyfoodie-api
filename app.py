@@ -2,12 +2,12 @@ import logging.config
 
 import os
 from flask import Flask, Blueprint
-from lonelyfoodie import settings
+import settings
 from lonelyfoodie.api.restaurants.endpoints.restaurants import ns as restaurants_namespace
 from lonelyfoodie.api.restplus import api
 
 app = Flask(__name__)
-logging_conf_path = os.path.normpath(os.path.join(os.path.dirname(__file__), '../logging.conf'))
+logging_conf_path = os.path.normpath(os.path.join(os.path.dirname(__file__), 'logging.conf'))
 logging.config.fileConfig(logging_conf_path)
 log = logging.getLogger(__name__)
 
@@ -34,7 +34,7 @@ def initialize_app(flask_app):
 def main():
     initialize_app(app)
     log.info('>>>>> Starting development server at http://{}/api/ <<<<<'.format(app.config['SERVER_NAME']))
-    app.run(debug=settings.FLASK_DEBUG)
+    app.run(host='0.0.0.0', port='5000', debug=settings.FLASK_DEBUG)
 
 
 if __name__ == "__main__":
