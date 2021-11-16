@@ -1,13 +1,13 @@
 import logging
 import traceback
 
-from flask_restplus import Api
+from flask_restx import Api
 import settings
 from sqlalchemy.orm.exc import NoResultFound
 
 log = logging.getLogger(__name__)
 
-api = Api(version='1.0', title='Lonely Foodie API',
+api = Api(version='2.0', title='Lonely Foodie API',
           description='고독한 시식가 프로젝트 서버의 API입니다.')
 
 

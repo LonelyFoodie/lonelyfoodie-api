@@ -1,7 +1,7 @@
 import logging
 
 from flask import request
-from flask_restplus import Resource
+from flask_restx import Resource
 from lonelyfoodie.api.services.restaurant_service import Restaurant
 from lonelyfoodie.api.serializers.restaurant_serializer import restaurant, restaurant_request
 from lonelyfoodie.api.parsers import pagination_arguments, restaurant_search_arguments
