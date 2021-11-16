@@ -4,7 +4,7 @@ import os
 from flask import Flask, Blueprint
 import settings
 from lonelyfoodie.api.controllers.restaurant_controller import ns as restaurants_namespace
-from lonelyfoodie.api.restplus import api
+from lonelyfoodie.api.restx import api
 
 app = Flask(__name__)
 logging_conf_path = os.path.normpath(os.path.join(os.path.dirname(__file__), 'logging.conf'))

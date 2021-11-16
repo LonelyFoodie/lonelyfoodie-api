@@ -1,5 +1,5 @@
 from flask_restx import fields
-from lonelyfoodie.api.restplus import api
+from lonelyfoodie.api.restx import api
 
 restaurant = api.model('Restaurant', {
     'id': fields.String(readOnly=True),
