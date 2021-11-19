@@ -1,3 +1,3 @@
 CLIENT_ID = "5fa3dc29df30da6309f4ed7804685533"
 CLIENT_SECRET = "28gTnfPLIuAnR2bfDUDdPXr6cbwp0Xf8"
-REDIRECT_URI = "http://localhost:5000/oauth"
+REDIRECT_URI = "http://127.0.0.1:5000/oauth"
