@@ -1,3 +1,3 @@
-clientID = "5fa3dc29df30da6309f4ed7804685533"
-clientSecret = "28gTnfPLIuAnR2bfDUDdPXr6cbwp0Xf8"
-redirectUrl = "http://localhost:8080/auth/kakao/callback"
+CLIENT_ID = "5fa3dc29df30da6309f4ed7804685533"
+CLIENT_SECRET = "28gTnfPLIuAnR2bfDUDdPXr6cbwp0Xf8"
+REDIRECT_URI = "http://localhost:5000/oauth"
