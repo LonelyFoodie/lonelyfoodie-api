@@ -16,6 +16,7 @@ branch_labels = None
 depends_on = None
 
 
+
 def upgrade():
     op.create_table('restaurants',
     sa.Column('id', sa.String(length=120), nullable=False),
@@ -28,6 +29,7 @@ def upgrade():
     sa.Column('deleted_at', sa.DateTime(timezone=True), nullable=True),
     sa.PrimaryKeyConstraint('id', name=op.f('pk_restaurants'))
     )
+
 
 
 def downgrade():
