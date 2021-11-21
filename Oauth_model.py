@@ -25,7 +25,7 @@ class UserData:
             user_info = user['kakao_account']['profile']
             self.id = user['id']
             self.nickname = user_info['nickname']
-            self.profile = user_info['profile_image_url'] 
+            self.profile = user_info['profile_image_url']
             self.thumbnail = user_info['thumbnail_image_url']
         else:
             self.id = None

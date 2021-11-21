@@ -74,13 +74,18 @@ def main():
         auth_info = oauth.auth(code)
         user = oauth.userinfo("Bearer " + auth_info['access_token'])
         
-        user = UserData(user)
-        UserModel().upsert_user(user)
-        
+        """
+        user_info = user['kakao_account']['profile']
+        self.id = user['id']
+        self.nickname = user_info['nickname']
+        self.profile = user_info['profile_image_url']
+        self.thumbnail = user_info['thumbnail_image_url']
+        """
+
         resp = make_response(render_template('index.html'))
         
-        access_token = create_access_token(identity=user.id)
-        refresh_token = create_refresh_token(identity=user.id)
+        access_token = create_access_token(identity=user['id'])
+        refresh_token = create_refresh_token(identity=user['id'])
         resp.set_cookie("logined", "true")
         set_access_cookies(resp, access_token)
         set_refresh_cookies(resp, refresh_token)
@@ -111,17 +116,17 @@ def main():
         resp.delete_cookie('logined')
         return resp
 
-
+    
     @app.route("/userinfo")
     @jwt_required
     def userinfo():
-        """
-        Access Token을 이용한 DB에 저장된 사용자 정보 가져오기
-        """
+    
+        #Access Token을 이용한 DB에 저장된 사용자 정보 가져오기
+    
         user_id = get_jwt_identity()
         userinfo = UserModel().get_user(user_id).serialize()
         return jsonify(userinfo)
-
+    
 
     @app.route('/oauth/url')
     def oauth_url_api():
