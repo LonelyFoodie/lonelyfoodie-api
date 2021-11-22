@@ -5,6 +5,7 @@ from flask import Flask, Blueprint
 import settings
 from lonelyfoodie.api.controllers.restaurant_controller import ns as restaurants_namespace
 from lonelyfoodie.api.controllers.user_controller import ns_user as user_namespace
+from lonelyfoodie.api.controllers.Oauth_controller import ns_Oauth as Oauth_namespace
 from lonelyfoodie.api.restx import api
 
 app = Flask(__name__)
@@ -30,6 +31,7 @@ def initialize_app(flask_app):
     api.init_app(blueprint)
     api.add_namespace(restaurants_namespace)
     api.add_namespace(user_namespace)
+    api.add_namespace(Oauth_namespace)
     flask_app.register_blueprint(blueprint)
 
 
