@@ -33,6 +33,7 @@ class Users(Base):
     __tablename__='users'
 
     id = Column(String(120), primary_key=True, default=lambda: str(uuid.uuid4()))
+    kakao_id = Column(String(120), unique=True)
     username=Column(String(120), nullable=False)
     email=Column(String(120), unique=True ,nullable=False)
     nickname=Column(String(120), unique=True ,nullable=False)

@@ -20,6 +20,7 @@ depends_on = None
 def upgrade():
     op.create_table('users',
     sa.Column('id',sa.String(length=120), nullable=False),
+    sa.Column('kakao_id',sa.String(length=120), nullable=False),
     sa.Column('username',sa.String(length=120), nullable=False),
     sa.Column('email',sa.String(length=120), nullable=False),
     sa.Column('nickname',sa.String(length=120), nullable=False),

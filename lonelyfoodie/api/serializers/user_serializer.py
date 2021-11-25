@@ -3,6 +3,7 @@ from lonelyfoodie.api.restx import api
 
 user = api.model('user', {
     'id': fields.String(readOnly=True),
+    'kakao_id': fields.String(readOnly=True),
     'username': fields.String(),
     'email': fields.String(),
     'nickname': fields.String(),

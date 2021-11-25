@@ -4,7 +4,7 @@ from flask import request,redirect,make_response
 from flask_restx import Resource
 from lonelyfoodie.api.restx import api
 from config import  CLIENT_ID,REDIRECT_URI,CLIENT_SECRET
-from lonelyfoodie.api.services.Oauth_service import User
+from lonelyfoodie.api.services.oauth_service import User
 log = logging.getLogger(__name__)
 ns_Oauth = api.namespace('oauth', description='Operations related to users')
 
@@ -49,6 +49,6 @@ class KakaoSignInCallback(Resource):
             return make_response({"message" : "INVALID_TOKEN"}, 400)
 
         #after this need to 
-        User.social_signin(data=data)
+        User.social_signup(data=data)
         #return redirect('나머지를 입력하는 페이지')
         return None,201

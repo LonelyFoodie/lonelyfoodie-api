@@ -5,7 +5,7 @@ from flask import Flask, Blueprint
 import settings
 from lonelyfoodie.api.controllers.restaurant_controller import ns as restaurants_namespace
 from lonelyfoodie.api.controllers.user_controller import ns_user as user_namespace
-from lonelyfoodie.api.controllers.Oauth_controller import ns_Oauth as Oauth_namespace
+from lonelyfoodie.api.controllers.oauth_controller import ns_Oauth as Oauth_namespace
 from lonelyfoodie.api.restx import api
 
 app = Flask(__name__)
