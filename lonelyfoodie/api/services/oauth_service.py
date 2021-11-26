@@ -1,23 +1,25 @@
-from flask import request, redirect
-from sqlalchemy.sql.expression import null
-import lonelyfoodie.api.repositories.oauth_repository as repository
+from lonelyfoodie.api.services.service import Service
+from lonelyfoodie.api.repositories.oauth_repository import OAuthRepository
  
 
-class User:
-    def social_signup(data):
-        kakao_properties = data.get("properties")
-        kakao_accounts = data.get("kakao_account")
-        nickname = kakao_properties.get("nickname")
-        kakao_id = str(data.get("id"))
-        email = kakao_accounts.get("email")
+class UserService(Service):
+    def __init__(self):
+        self.repository = OAuthRepository()
+        super().__init__(self.repository)
+
+    def create(self, data):
+        nickname = data['properties']['nickname']
+        kakao_id = str(data['id'])
+        email = data['kakao_account']['email']
+
         setup_data = {
-            'kakao_id':kakao_id,
+            'kakao_id': kakao_id,
             'username': nickname,
             'email': email,
-            'nickname': "null",
-            'dept_code': "null",
-            'student_year': "null",
-            'sex':"null"
+            'nickname': nickname,
+            'dept_code': None,
+            'student_year': None,
+            'sex': None
         }
-        repository.create(setup_data)
+        super().create(setup_data)
         

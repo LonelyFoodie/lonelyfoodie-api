@@ -9,11 +9,11 @@ from flask_restx import Resource
 from config import CLIENT_ID, REDIRECT_URI, CLIENT_SECRET
 from lonelyfoodie.api.restx import api
 from lonelyfoodie.api.parsers import kakao_authorization_arguments
-from lonelyfoodie.api.services.oauth_service import User
-
+from lonelyfoodie.api.services.oauth_service import UserService
 
 log = logging.getLogger(__name__)
 ns = api.namespace('oauth', description='Operations related to users')
+service = UserService()
 
 
 @ns.route('/')
@@ -49,6 +49,6 @@ class KakaoSignInCallback(Resource):
                 "https://kapi.kakao.com/v2/user/me", headers={"Authorization": f"Bearer {access_token}"},
         ).json()
 
-        User.social_signup(data=profile)
+        service.create(data=profile)
 
         return None, 201

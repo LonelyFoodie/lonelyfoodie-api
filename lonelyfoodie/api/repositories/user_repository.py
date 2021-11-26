@@ -1,11 +1,11 @@
 from werkzeug.exceptions import NotFound
 from lonelyfoodie.database import use_database
-from lonelyfoodie.database.models import Users
+from lonelyfoodie.database.models import User
 
 
 @use_database
 def create(db, data):
-    user = Users()
+    user = User()
 
     for key, value in data.items():
         setattr(user, key, value)
@@ -16,7 +16,7 @@ def create(db, data):
 
 @use_database
 def find_one(db, user_id):
-    user = db.query(Users).filter(Users.id == user_id).one()
+    user = db.query(User).filter(User.id == user_id).one()
     if not user:
         raise NotFound()
     return user
@@ -24,10 +24,10 @@ def find_one(db, user_id):
 
 @use_database
 def find(db, page, per_page, name):
-    query = db.query(Users)
+    query = db.query(User)
 
     if name:
-        query = query.filter(Users.nickname.like(f'%{name}%'))
+        query = query.filter(User.nickname.like(f'%{name}%'))
 
     user = query.offset((page - 1) * per_page).limit(per_page).all()
 

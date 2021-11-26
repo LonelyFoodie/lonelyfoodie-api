@@ -1,16 +1,14 @@
-from werkzeug.exceptions import NotFound
-from lonelyfoodie.database import use_database
-from lonelyfoodie.database.models import Users
+from lonelyfoodie.database import Database
+from lonelyfoodie.database.models import User
+from lonelyfoodie.api.repositories.repository import Repository
 
 
-@use_database
-def create(db, data):
-    user = Users()
+class OAuthRepository(Repository):
+    def __init__(self):
+        self.obj = User
+        self.db = None
 
-    for key, value in data.items():
-        setattr(user, key, value)
+        with Database() as db:
+            self.db = db
 
-    db.add(user)
-    db.commit()
-
-
+        super().__init__(self.obj, self.db)

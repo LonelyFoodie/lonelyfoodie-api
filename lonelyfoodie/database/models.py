@@ -13,9 +13,11 @@ from sqlalchemy.sql.sqltypes import Enum
 
 from .base import Base
 
-class sexType(enum.Enum):
+
+class SexEnum(enum.Enum):
     male = "male"
     female = "female"
+
 
 class Restaurant(Base):
     __tablename__ = 'restaurants'
@@ -29,18 +31,17 @@ class Restaurant(Base):
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
     deleted_at = Column(DateTime(timezone=True))
 
-class Users(Base):
+
+class User(Base):
     __tablename__='users'
 
     id = Column(String(120), primary_key=True, default=lambda: str(uuid.uuid4()))
-    kakao_id = Column(String(120), unique=True)
-    username=Column(String(120), nullable=False)
-    email=Column(String(120), unique=True ,nullable=False)
-    nickname=Column(String(120), unique=True ,nullable=False)
-    dept_code=Column(String(120) ,nullable=False)
-    student_year=Column(String(120) ,nullable=False)
-    #sex=Column(Enum(sexType),nullable=False),
-    sex=Column(String(120) ,nullable=False)
+    kakao_id = Column(String(120), unique=True, nullable=False)
+    email = Column(String(120), unique=True, nullable=False)
+    nickname = Column(String(120), nullable=False)
+    dept_code = Column(String(120))
+    student_year = Column(String(120))
+    sex = Column(Enum(SexEnum))
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
     deleted_at = Column(DateTime(timezone=True))
