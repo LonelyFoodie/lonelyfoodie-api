@@ -2,7 +2,7 @@ import logging
 
 from flask import request
 from flask_restx import Resource
-from lonelyfoodie.api.services.restaurant_service import Restaurant
+from lonelyfoodie.api.services.restaurant_service import RestaurantService
 from lonelyfoodie.api.serializers.restaurant_serializer import restaurant, restaurant_request
 from lonelyfoodie.api.parsers import pagination_arguments, restaurant_search_arguments
 from lonelyfoodie.api.restx import api
@@ -12,7 +12,7 @@ from lonelyfoodie.api.services.user_service import User
 from lonelyfoodie.api.serializers.user_serializer import user, user_request
 from lonelyfoodie.api.parsers import pagination_arguments, user_search_arguments
 
-service = Restaurant()
+service = RestaurantService()
 
 log = logging.getLogger(__name__)
 
@@ -35,7 +35,7 @@ class RestaurantCollection(Resource):
         args = restaurant_search_arguments.parse_args(request)
         name = args.get('name', '')
 
-        restaurants = service.find(page, per_page, name)
+        restaurants = service.find_with_argument(page, per_page, name)
         return restaurants
 
     @api.expect(restaurant_request)
