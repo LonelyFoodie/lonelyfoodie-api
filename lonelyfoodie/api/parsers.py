@@ -8,3 +8,6 @@ pagination_arguments.add_argument('per_page', type=int, required=False, choices=
 
 restaurant_search_arguments = reqparse.RequestParser()
 restaurant_search_arguments.add_argument('name', type=str, required=False)
+
+user_search_arguments =  reqparse.RequestParser()
+user_search_arguments.add_argument('name', type=str, required=False)
