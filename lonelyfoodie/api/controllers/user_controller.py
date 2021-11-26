@@ -10,10 +10,10 @@ from lonelyfoodie.api.restx import api
 service_user = User()
 
 log = logging.getLogger(__name__)
-ns_user = api.namespace('users', description='Operations related to users')
+ns = api.namespace('users', description='Operations related to users')
 
-###user
-@ns_user.route('/')
+
+@ns.route('/')
 class UserCollection(Resource):
 
     @api.expect(pagination_arguments, user_search_arguments)
@@ -37,7 +37,7 @@ class UserCollection(Resource):
         return None, 201
 
 
-@ns_user.route('/<id>')
+@ns.route('/<id>')
 @api.response(404, 'User not found.')
 class UsertItem(Resource):
 

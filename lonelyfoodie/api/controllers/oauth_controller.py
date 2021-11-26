@@ -4,11 +4,12 @@ from flask import request,redirect,make_response
 from flask_restx import Resource
 from lonelyfoodie.api.restx import api
 from config import  CLIENT_ID,REDIRECT_URI,CLIENT_SECRET
-from lonelyfoodie.api.services.Oauth_service import User
+from lonelyfoodie.api.services.oauth_service import User
 log = logging.getLogger(__name__)
-ns_Oauth = api.namespace('oauth', description='Operations related to users')
+ns = api.namespace('oauth', description='Operations related to users')
 
-@ns_Oauth.route('/')
+
+@ns.route('/')
 class KakaoSignIn(Resource):
     def get(self):
         client_id = CLIENT_ID
@@ -17,7 +18,7 @@ class KakaoSignIn(Resource):
         return redirect(kakao_oauthurl)
 
 
-@ns_Oauth.route("/callback/")
+@ns.route("/callback/")
 class KakaoSignInCallback(Resource):
     @api.expect()
     @api.response(201, 'kakao Oauth')
