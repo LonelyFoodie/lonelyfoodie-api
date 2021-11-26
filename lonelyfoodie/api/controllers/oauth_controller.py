@@ -3,7 +3,7 @@ import requests
 
 from werkzeug.exceptions import Unauthorized
 
-from flask import redirect
+from flask import request, redirect
 from flask_restx import Resource
 
 from config import CLIENT_ID, REDIRECT_URI, CLIENT_SECRET
@@ -32,7 +32,7 @@ class KakaoSignInCallback(Resource):
     @api.response(201, 'Successfully registered')
     @api.response(401, 'Invalid Code')
     def get(self):
-        args = kakao_authorization_arguments.parse_args()
+        args = kakao_authorization_arguments.parse_args(request)
         code = args.get('code')
 
         token_response = requests.get(
