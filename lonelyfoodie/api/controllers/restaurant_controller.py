@@ -7,11 +7,6 @@ from lonelyfoodie.api.serializers.restaurant_serializer import restaurant, resta
 from lonelyfoodie.api.parsers import pagination_arguments, restaurant_search_arguments
 from lonelyfoodie.api.restx import api
 
-##User
-from lonelyfoodie.api.services.user_service import User
-from lonelyfoodie.api.serializers.user_serializer import user, user_request
-from lonelyfoodie.api.parsers import pagination_arguments, user_search_arguments
-
 service = RestaurantService()
 
 log = logging.getLogger(__name__)

@@ -1,52 +1,25 @@
-from werkzeug.exceptions import NotFound
-from lonelyfoodie.database import use_database
+from lonelyfoodie.database import Database
 from lonelyfoodie.database.models import User
+from lonelyfoodie.api.repositories.repository import Repository
 
 
-@use_database
-def create(db, data):
-    user = User()
+class UserRepository(Repository):
+    def __init__(self):
+        self.obj = User
+        self.db = None
 
-    for key, value in data.items():
-        setattr(user, key, value)
+        with Database() as db:
+            self.db = db
 
-    db.add(user)
-    db.commit()
+        super().__init__(self.obj, self.db)
 
+    def find_with_nickname(self, page, per_page, nickname):
+        query = self.db.query(User)
 
-@use_database
-def find_one(db, user_id):
-    user = db.query(User).filter(User.id == user_id).one()
-    if not user:
-        raise NotFound()
-    return user
+        if nickname:
+            query = query.filter(User.nickname.like(f'%{nickname}%'))
 
+        users = query.offset((page - 1) * per_page).limit(per_page).all()
 
-@use_database
-def find(db, page, per_page, name):
-    query = db.query(User)
+        return users
 
-    if name:
-        query = query.filter(User.nickname.like(f'%{name}%'))
-
-    user = query.offset((page - 1) * per_page).limit(per_page).all()
-
-    return user
-
-
-@use_database
-def update(db, user_id, data):
-    user= find_one(user_id)
-
-    for key, value in data.items():
-        setattr(user, key, value)
-
-    db.add(user)
-    db.commit()
-
-
-@use_database
-def remove(db, user_id):
-    user = find_one(user_id)
-    db.delete(user)
-    db.commit()

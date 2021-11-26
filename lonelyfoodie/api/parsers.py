@@ -10,7 +10,7 @@ restaurant_search_arguments = reqparse.RequestParser()
 restaurant_search_arguments.add_argument('name', type=str, required=False)
 
 user_search_arguments = reqparse.RequestParser()
-user_search_arguments.add_argument('name', type=str, required=False)
+user_search_arguments.add_argument('nickname', type=str, required=False)
 
 kakao_authorization_arguments = reqparse.RequestParser()
 kakao_authorization_arguments.add_argument('code', type=str, required=True)

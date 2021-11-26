@@ -1,20 +1,11 @@
-import lonelyfoodie.api.repositories.user_repository as repository
+from lonelyfoodie.api.services.service import Service
+from lonelyfoodie.api.repositories.user_repository import UserRepository
 
 
-class User:
-    def create(self, data):
-        repository.create(data)
+class UserService(Service):
+    def __init__(self):
+        self.repository = UserRepository()
+        super().__init__(self.repository)
 
-    def find_one(self, user_nickname):
-        users = repository.find_one(user_nickname)
-        return users
-
-    def find(self, page, per_page, name):
-        user = repository.find(page, per_page, name)
-        return user
-
-    def update(self, user_nickname, data):
-        repository.update(user_nickname, data)
-
-    def remove(self, user_nickname):
-        repository.remove(user_nickname)
+    def find_with_nickname(self, page, per_page, nickname):
+        return self.repository.find_with_nickname(page, per_page, nickname)
