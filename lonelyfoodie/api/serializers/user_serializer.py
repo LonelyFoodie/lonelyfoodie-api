@@ -11,7 +11,11 @@ class Sex(fields.Raw):
             return "male"
 
 
-user = api.model('user', {
+user_access_token = api.model('AccessToken', {
+    'access_token': fields.String(readOnly=True),
+})
+
+user = api.model('User', {
     'id': fields.String(readOnly=True),
     'kakao_id': fields.String(readOnly=True),
     'email': fields.String(),

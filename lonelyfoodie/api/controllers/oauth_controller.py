@@ -9,6 +9,7 @@ from flask_restx import Resource
 from config import CLIENT_ID, REDIRECT_URI, CLIENT_SECRET
 from lonelyfoodie.api.restx import api
 from lonelyfoodie.api.parsers import kakao_authorization_arguments
+from lonelyfoodie.api.serializers.user_serializer import user_access_token
 from lonelyfoodie.api.services.oauth_service import UserService
 
 log = logging.getLogger(__name__)
@@ -29,9 +30,10 @@ class KakaoSignIn(Resource):
 class KakaoSignInCallback(Resource):
 
     @api.expect(kakao_authorization_arguments)
-    @api.response(201, 'Successfully registered')
-    @api.response(401, 'Invalid Code')
-    @api.response(409, 'User already exists.')
+    @api.response(200, 'Successfully signed in.')
+    @api.response(201, 'Successfully registered.')
+    @api.response(401, 'Invalid code is given.')
+    @api.marshal_with(user_access_token)
     def get(self):
         args = kakao_authorization_arguments.parse_args(request)
         code = args.get('code')
@@ -50,6 +52,6 @@ class KakaoSignInCallback(Resource):
                 "https://kapi.kakao.com/v2/user/me", headers={"Authorization": f"Bearer {access_token}"},
         ).json()
 
-        service.create(data=profile)
+        status_code = service.create(data=profile)
 
-        return None, 201
+        return {'access_token': access_token}, status_code

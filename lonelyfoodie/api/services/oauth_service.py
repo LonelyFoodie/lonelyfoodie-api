@@ -17,7 +17,7 @@ class UserService(Service):
         duplicated_user = self.repository.find_by_kakao_id(kakao_id)
 
         if duplicated_user:
-            raise Conflict('User already exists.')
+            return 200
 
         setup_data = {
             'kakao_id': kakao_id,
@@ -29,4 +29,5 @@ class UserService(Service):
             'sex': None
         }
         super().create(setup_data)
+        return 201
         
