@@ -4,7 +4,7 @@ from flask import request
 from flask_restx import Resource
 from lonelyfoodie.api.services.user_service import UserService
 from lonelyfoodie.api.serializers.user_serializer import user, user_request
-from lonelyfoodie.api.parsers import pagination_arguments, user_search_arguments
+from lonelyfoodie.api.parsers import user_authorization_arguments
 from lonelyfoodie.api.restx import api
 
 service = UserService()
@@ -14,20 +14,18 @@ ns = api.namespace('users', description='Operations related to users')
 
 
 @ns.route('/')
+@api.response(400, 'Authorization header is not present.')
+@api.response(401, 'Access token is not valid.')
 class UserCollection(Resource):
 
-    @api.expect(pagination_arguments, user_search_arguments)
+    @api.expect(user_authorization_arguments)
     @api.marshal_list_with(user)
     def get(self):
-        args = pagination_arguments.parse_args(request)
-        page = args.get('page', 1)
-        per_page = args.get('per_page', 10)
+        user_authorization_arguments.parse_args(request)
+        authorization = user_authorization_arguments.get('Authorization')
 
-        args = user_search_arguments.parse_args(request)
-        nickname = args.get('nickname', '')
-
-        users = service.find_with_nickname(page, per_page, nickname)
-        return users, 200
+        user = service.find_by_access_token(authorization)
+        return user, 200
 
 
 @ns.route('/<id>')

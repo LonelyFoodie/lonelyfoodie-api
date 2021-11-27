@@ -13,13 +13,12 @@ class UserRepository(Repository):
 
         super().__init__(self.obj, self.db)
 
-    def find_with_nickname(self, page, per_page, nickname):
-        query = self.db.query(User)
+    def find_by_kakao_id(self, kakao_id: str):
+        user = self.db.query(User) \
+            .filter(User.kakao_id == kakao_id,
+                    User.deleted_at.is_(None)) \
+            .first()
 
-        if nickname:
-            query = query.filter(User.nickname.like(f'%{nickname}%'))
+        return user
 
-        users = query.offset((page - 1) * per_page).limit(per_page).all()
-
-        return users
 
