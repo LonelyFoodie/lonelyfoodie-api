@@ -29,14 +29,11 @@ class UserCollection(Resource):
 
 
 @ns.route('/<id>')
+@api.expect(user_authorization_arguments)
+@api.response(400, 'Authorization header is not present.')
+@api.response(401, 'Access token is not valid.')
 @api.response(404, 'User not found.')
 class UserItem(Resource):
-
-    @api.marshal_with(user)
-    def get(self, id):
-        user = service.find_one(id)
-        return user
-
     @api.expect(user_request)
     @api.response(204, 'User successfully updated.')
     def patch(self, id):

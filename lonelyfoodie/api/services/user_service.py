@@ -21,10 +21,6 @@ class UserService(Service):
         return self.repository.find_by_kakao_id(kakao_id)
 
     @authorize
-    def find_one(self, id):
-        return super().find_one(id)
-
-    @authorize
     def update(self, id, data):
         super().update(id, data)
 
