@@ -31,6 +31,7 @@ class KakaoSignInCallback(Resource):
     @api.expect(kakao_authorization_arguments)
     @api.response(201, 'Successfully registered')
     @api.response(401, 'Invalid Code')
+    @api.response(409, 'User already exists.')
     def get(self):
         args = kakao_authorization_arguments.parse_args(request)
         code = args.get('code')
