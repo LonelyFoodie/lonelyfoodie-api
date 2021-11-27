@@ -21,8 +21,8 @@ class UserCollection(Resource):
     @api.expect(user_authorization_arguments)
     @api.marshal_list_with(user)
     def get(self):
-        user_authorization_arguments.parse_args(request)
-        authorization = user_authorization_arguments.get('Authorization')
+        args = user_authorization_arguments.parse_args(request)
+        authorization = args.get('Authorization')
 
         user = service.find_by_access_token(authorization)
         return user, 200
@@ -36,6 +36,7 @@ class UserCollection(Resource):
 class UserItem(Resource):
     @api.expect(user_request)
     @api.response(204, 'User successfully updated.')
+    @api.response(400, 'Invalid update request is present.')
     def patch(self, id):
         data = request.json or {}
         service.update(id, data)
