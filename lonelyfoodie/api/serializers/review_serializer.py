@@ -15,7 +15,6 @@ review = api.model('Review', {
 
 review_create_request = api.model('ReviewCreateRequest', {
     'restaurant_id': fields.String(readOnly=True, required=True),
-    'writer_id': fields.String(readOnly=True, required=True),
     'title': fields.String(required=True),
     'content': fields.String(required=True),
     'star': fields.Integer(),

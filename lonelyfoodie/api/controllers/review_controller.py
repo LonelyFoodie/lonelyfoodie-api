@@ -4,7 +4,7 @@ from flask import request
 from flask_restx import Resource
 from lonelyfoodie.api.services.review_service import ReviewService
 from lonelyfoodie.api.serializers.review_serializer import review, review_create_request, review_update_request
-from lonelyfoodie.api.parsers import pagination_arguments, review_search_arguments
+from lonelyfoodie.api.parsers import pagination_arguments, review_search_arguments, user_authorization_arguments
 from lonelyfoodie.api.restx import api
 
 service = ReviewService()
@@ -22,7 +22,7 @@ class ReviewCollection(Resource):
     def get(self):
         args = pagination_arguments.parse_args(request)
         page = args.get('page', 1)
-        per_page = args.get('per_page', 10)
+        per_page = args.get('per_page', 20)
 
         args = review_search_arguments.parse_args(request)
         title = args.get('title', '')
@@ -33,15 +33,18 @@ class ReviewCollection(Resource):
         elif content:
             reviews = service.find_with_content(page, per_page, content)
         else:
-            reviews = service.find_with_pagination(page, per_page)
+            reviews = service.find()
 
         return reviews
 
-    @api.expect(review_create_request)
+    @api.expect(review_create_request, user_authorization_arguments)
     @api.response(201, 'Review successfully created.')
     def post(self):
+        args = user_authorization_arguments.parse_args(request)
+        authorization = args.get('Authorization')
+
         data = request.json or {}
-        service.create(data)
+        service.create(data, authorization)
         return None, 201
 
 
@@ -54,15 +57,22 @@ class ReviewItem(Resource):
         restaurant = service.find_one(id)
         return restaurant
 
-    @api.expect(review_update_request)
+    @api.expect(review_update_request, user_authorization_arguments)
     @api.response(204, 'Review successfully updated.')
     def patch(self, id):
+        args = user_authorization_arguments.parse_args(request)
+        authorization = args.get('Authorization')
+
         data = request.json or {}
-        service.update(id, data)
+        service.update(id, data, authorization)
         return None, 204
 
+    @api.expect(user_authorization_arguments)
     @api.response(204, 'Review successfully deleted.')
     def delete(self, id):
-        service.remove(id)
+        args = user_authorization_arguments.parse_args(request)
+        authorization = args.get('Authorization')
+
+        service.remove(id, authorization)
         return None, 204
 
