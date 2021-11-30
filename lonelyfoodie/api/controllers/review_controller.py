@@ -4,7 +4,7 @@ from flask import request
 from flask_restx import Resource
 from lonelyfoodie.api.services.review_service import ReviewService
 from lonelyfoodie.api.serializers.review_serializer import review, review_create_request, review_update_request
-from lonelyfoodie.api.parsers import pagination_arguments, review_search_arguments, review_search_arguments2
+from lonelyfoodie.api.parsers import pagination_arguments, review_search_arguments
 from lonelyfoodie.api.restx import api
 
 service = ReviewService()
@@ -25,9 +25,16 @@ class ReviewCollection(Resource):
         per_page = args.get('per_page', 10)
 
         args = review_search_arguments.parse_args(request)
-        keyword = args.get('name', '')
+        title = args.get('title', '')
+        content = args.get('content', '')
 
-        reviews = service.find_with_title(page, per_page, keyword)
+        if title:
+            reviews = service.find_with_title(page, per_page, title)
+        elif content:
+            reviews = service.find_with_content(page, per_page, content)
+        else:
+            reviews = service.find_with_pagination(page, per_page)
+
         return reviews
 
     @api.expect(review_create_request)
