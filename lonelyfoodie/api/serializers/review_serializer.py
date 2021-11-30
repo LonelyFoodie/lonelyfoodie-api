@@ -21,7 +21,7 @@ review_create_request = api.model('ReviewCreateRequest', {
     'star': fields.Integer(),
 })
 
-review_update_request = api.model('ReviewCreate', {
+review_update_request = api.model('ReviewUpdateCreate', {
     'title': fields.String(),
     'content': fields.String(),
     'star': fields.Integer()
