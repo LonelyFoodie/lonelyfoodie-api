@@ -3,7 +3,7 @@ import logging
 from flask import request
 from flask_restx import Resource
 from lonelyfoodie.api.services.review_service import ReviewService
-from lonelyfoodie.api.serializers.review_serializer import review, review_request
+from lonelyfoodie.api.serializers.review_serializer import review, review_create_request, review_update_request
 from lonelyfoodie.api.parsers import pagination_arguments, review_search_arguments, review_search_arguments2
 from lonelyfoodie.api.restx import api
 
@@ -30,7 +30,7 @@ class ReviewCollection(Resource):
         reviews = service.find_with_title(page, per_page, keyword)
         return reviews
 
-    @api.expect(review_request)
+    @api.expect(review_create_request)
     @api.response(201, 'Review successfully created.')
     def post(self):
         data = request.json or {}
@@ -47,7 +47,7 @@ class ReviewItem(Resource):
         restaurant = service.find_one(id)
         return restaurant
 
-    @api.expect(review_request)
+    @api.expect(review_update_request)
     @api.response(204, 'Review successfully updated.')
     def patch(self, id):
         data = request.json or {}

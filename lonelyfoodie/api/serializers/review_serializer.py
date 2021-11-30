@@ -13,7 +13,15 @@ review = api.model('Review', {
     'deleted_at': fields.DateTime()
 })
 
-review_request = api.model('ReviewCreate', {
+review_create_request = api.model('ReviewCreateRequest', {
+    'restaurant_id': fields.String(readOnly=True, required=True),
+    'writer_id': fields.String(readOnly=True, required=True),
+    'title': fields.String(required=True),
+    'content': fields.String(required=True),
+    'star': fields.Integer(),
+})
+
+review_update_request = api.model('ReviewCreate', {
     'title': fields.String(),
     'content': fields.String(),
     'star': fields.Integer()
