@@ -9,7 +9,7 @@ from sqlalchemy import Column, String, DateTime, Float, ForeignKey
 from sqlalchemy.orm import relationship, backref
 from sqlalchemy.sql import func
 from sqlalchemy.sql.expression import column
-from sqlalchemy.sql.sqltypes import Enum
+from sqlalchemy.sql.sqltypes import Enum, Integer
 
 from .base import Base
 
@@ -46,3 +46,15 @@ class User(Base):
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
     deleted_at = Column(DateTime(timezone=True))
 
+class Review(Base):
+    __tablename__='review'
+
+    id = Column(String(120), primary_key=True, default=lambda: str(uuid.uuid4()))
+    restaurant_id = Column(String(120), ForeignKey('restaurants.id'), default=lambda: str(uuid.uuid4()))
+    writer_id = Column(String(120), ForeignKey('users.id'), default=lambda: str(uuid.uuid4()))
+    title = Column(String(120) ,nullable=False)
+    content = Column(String(120) ,nullable=False)
+    star = Column(Integer() ,nullable=True)
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+    updated_at = Column(DateTime(timezone=True), onupdate=func.now())
+    deleted_at = Column(DateTime(timezone=True))

@@ -12,9 +12,6 @@ service = RestaurantService()
 log = logging.getLogger(__name__)
 
 ns = api.namespace('restaurants', description='Operations related to restaurants')
-ns_user = api.namespace('users', description='Operations related to users')
-
-
 
 ###Restaurant
 @ns.route('/')
