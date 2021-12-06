@@ -18,3 +18,5 @@ user_authorization_arguments.add_argument('Authorization', location='headers', r
 review_search_arguments = reqparse.RequestParser()
 review_search_arguments.add_argument('title', type=str, required=False)
 review_search_arguments.add_argument('content', type=str, required=False)
+review_search_arguments.add_argument('writer_id', type=str, required=False)
+review_search_arguments.add_argument('restaurant_id', type=str, required=False)
