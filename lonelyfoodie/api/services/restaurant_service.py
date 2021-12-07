@@ -10,3 +10,7 @@ class RestaurantService(Service):
     def find_with_argument(self, page, per_page, name):
         restaurants = self.repository.find_with_argument(page, per_page, name)
         return restaurants
+
+    def find_one_by_kakaomap_id(self, kakaomap_id):
+        restauransts = self.repository.find_one_by_kakaomap_id(kakaomap_id)
+        return restauransts
