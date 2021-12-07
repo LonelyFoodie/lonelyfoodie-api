@@ -60,3 +60,10 @@ class RestaurantItem(Resource):
         return None, 204
 
 
+@ns.route('/search/<kakaomap_id>')
+@api.response(404, 'Restaurant not found.')
+class Restaurant_kakao(Resource):
+    @api.marshal_with(restaurant)
+    def get(self, kakaomap_id):
+        restaurant = service.find_one_by_kakaomap_id(kakaomap_id)
+        return restaurant
