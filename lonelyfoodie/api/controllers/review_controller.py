@@ -27,11 +27,16 @@ class ReviewCollection(Resource):
         args = review_search_arguments.parse_args(request)
         title = args.get('title', '')
         content = args.get('content', '')
-
+        writer_id = args.get('writer_id','')
+        restaurant_id = args.get('restaurant_id','')
         if title:
             reviews = service.find_with_title(page, per_page, title)
         elif content:
             reviews = service.find_with_content(page, per_page, content)
+        elif writer_id:
+            reviews = service.find_with_writer_id(page, per_page, writer_id)
+        elif restaurant_id:
+            reviews = service.find_with_restaurant_id(page, per_page, restaurant_id)
         else:
             reviews = service.find()
 

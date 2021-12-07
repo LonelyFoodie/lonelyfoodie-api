@@ -48,3 +48,12 @@ class ReviewService(Service):
     def find_with_content(self, page, per_page, keyword):
         review = self.repository.find_with_content(page, per_page, keyword)
         return review
+
+    def find_with_writer_id(self, page, per_page, writer_id):
+        review = self.repository.find_with_writer_id(page, per_page, writer_id)
+        return review
+
+    def find_with_restaurant_id(self, page, per_page, restaurant_id):
+        review = self.repository.find_with_restaurant_id(page, per_page, restaurant_id)
+        return review
+        

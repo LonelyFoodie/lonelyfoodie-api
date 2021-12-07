@@ -54,7 +54,7 @@ class Review(Base):
     writer_id = Column(String(120), ForeignKey('users.id'), default=lambda: str(uuid.uuid4()))
     title = Column(String(120), nullable=False)
     content = Column(String(120), nullable=False)
-    star = Column(Integer(), nullable=True)
+    star = Column(Integer(), nullable=False)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
     deleted_at = Column(DateTime(timezone=True))
