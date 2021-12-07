@@ -22,6 +22,8 @@ def upgrade():
     sa.Column('id', sa.String(length=120), nullable=False),
     sa.Column('name', sa.String(length=120), nullable=False),
     sa.Column('kakaomap_id', sa.String(length=120), nullable=True),
+    sa.Column('reviews', sa.Integer(), nullable=True),
+    sa.Column('rating_avg', sa.Float(), nullable=True),
     sa.Column('latitude', sa.Float(), nullable=True),
     sa.Column('longitude', sa.Float(), nullable=True),
     sa.Column('created_at', sa.DateTime(timezone=True), server_default=sa.text('now()'), nullable=True),
