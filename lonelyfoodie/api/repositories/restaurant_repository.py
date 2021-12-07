@@ -23,3 +23,13 @@ class RestaurantRepository(Repository):
         restaurants = query.offset((page - 1) * per_page).limit(per_page).all()
 
         return restaurants
+        
+    def find_one_by_kakaomap_id(self, kakaomap_id):
+        item = self.db.query(self.object) \
+            .filter(self.object.kakaomap_id == kakaomap_id) \
+            .one()
+
+        if not item:
+            raise NotFound
+
+        return item
