@@ -13,7 +13,7 @@ log = logging.getLogger(__name__)
 
 ns = api.namespace('restaurants', description='Operations related to restaurants')
 
-###Restaurant
+
 @ns.route('/')
 class RestaurantCollection(Resource):
 

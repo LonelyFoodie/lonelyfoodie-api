@@ -35,21 +35,17 @@ class ReviewRepository(Repository):
         return review
 
     def find_with_writer_id(self, page, per_page, id):
-        query = self.db.query(Review)
+        query = self.db.query(Review) \
+                .filter(Review.writer_id == id)
 
-        if id:
-            query = query.filter(Review.writer_id.like(f'%{id}%'))
+        reviews = query.offset((page - 1) * per_page).limit(per_page).all()
 
-        review = query.offset((page - 1) * per_page).limit(per_page).all()
-
-        return review
+        return reviews
 
     def find_with_restaurant_id(self, page, per_page, id):
-        query = self.db.query(Review)
+        query = self.db.query(Review) \
+                .filter(Review.restaurant_id == id)
 
-        if id:
-            query = query.filter(Review.restaurant_id.like(f'%{id}%'))
-
-        review = query.offset((page - 1) * per_page).limit(per_page).all()
+        reviews = query.offset((page - 1) * per_page).limit(per_page).all()
         
-        return review
+        return reviews
