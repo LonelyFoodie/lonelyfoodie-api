@@ -25,8 +25,12 @@ class RestaurantCollection(Resource):
         per_page = args.get('per_page', 10)
 
         args = restaurant_search_arguments.parse_args(request)
-        name = args.get('name', '')
+        kakaomap_id = args.get('kakaomap_id', '')
+        if kakaomap_id:
+            restaurant = service.find_with_kakaomap_id(kakaomap_id)
+            return restaurant
 
+        name = args.get('name', '')
         restaurants = service.find_with_argument(page, per_page, name)
         return restaurants
 

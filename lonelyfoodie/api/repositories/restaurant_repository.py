@@ -23,3 +23,10 @@ class RestaurantRepository(Repository):
         restaurants = query.offset((page - 1) * per_page).limit(per_page).all()
 
         return restaurants
+
+    def find_with_kakaomap_id(self, id):
+        restaurant = self.db.query(Restaurant) \
+            .filter(Restaurant.kakaomap_id == id) \
+            .first()
+
+        return restaurant

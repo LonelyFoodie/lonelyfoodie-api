@@ -8,6 +8,7 @@ pagination_arguments.add_argument('per_page', type=int, required=False, choices=
 
 restaurant_search_arguments = reqparse.RequestParser()
 restaurant_search_arguments.add_argument('name', type=str, required=False)
+restaurant_search_arguments.add_argument('kakaomap_id', type=str, required=False)
 
 kakao_authorization_arguments = reqparse.RequestParser()
 kakao_authorization_arguments.add_argument('code', type=str, required=True)
