@@ -1,3 +1,6 @@
+import sys
+sys.path.append('/app')
+
 from lonelyfoodie.database import use_database
 from lonelyfoodie.database.models import Restaurant
 
