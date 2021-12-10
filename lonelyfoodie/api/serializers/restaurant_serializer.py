@@ -17,7 +17,7 @@ restaurant = api.model('Restaurant', {
 restaurant_request = api.model('RestaurantCreate', {
     'name': fields.String(),
     'kakaomap_id': fields.String(),
-    'reviews': fields.String(),
+    'reviews': fields.Integer(),
     'rating_avg': fields.Float(),
     'latitude': fields.Float(),
     'longitude': fields.Float()
