@@ -14,3 +14,7 @@ class RestaurantService(Service):
     def find_with_kakaomap_id(self, id):
         restaurant = self.repository.find_with_kakaomap_id(id)
         return restaurant
+
+    def update_number_of_reviews_and_raiting(self, id, state):
+        review_count = self.repository.update_number_of_reviews_and_raiting(id,state)
+        return review_count
