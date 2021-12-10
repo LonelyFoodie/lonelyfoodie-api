@@ -12,6 +12,12 @@ restaurant = api.model('Restaurant', {
     'deleted_at': fields.DateTime()
 })
 
+restaurant_with_review = api.model('RestaurantWithReview', {
+    'restaurant': fields.Nested(restaurant, skip_none=False),
+    'review_count': fields.Integer(),
+    'avg_star_rate': fields.Float(),
+})
+
 restaurant_request = api.model('RestaurantCreate', {
     'name': fields.String(),
     'kakaomap_id': fields.String(),

@@ -3,7 +3,7 @@ import logging
 from flask import request
 from flask_restx import Resource
 from lonelyfoodie.api.services.restaurant_service import RestaurantService
-from lonelyfoodie.api.serializers.restaurant_serializer import restaurant, restaurant_request
+from lonelyfoodie.api.serializers.restaurant_serializer import restaurant, restaurant_request, restaurant_with_review
 from lonelyfoodie.api.parsers import pagination_arguments, restaurant_search_arguments
 from lonelyfoodie.api.restx import api
 
@@ -24,12 +24,6 @@ class RestaurantCollection(Resource):
         page = args.get('page', 1)
         per_page = args.get('per_page', 10)
 
-        args = restaurant_search_arguments.parse_args(request)
-        kakaomap_id = args.get('kakaomap_id', '')
-        if kakaomap_id:
-            restaurant = service.find_with_kakaomap_id(kakaomap_id)
-            return restaurant
-
         name = args.get('name', '')
         restaurants = service.find_with_argument(page, per_page, name)
         return restaurants
@@ -46,9 +40,9 @@ class RestaurantCollection(Resource):
 @api.response(404, 'Restaurant not found.')
 class RestaurantItem(Resource):
 
-    @api.marshal_with(restaurant)
+    @api.marshal_with(restaurant_with_review)
     def get(self, id):
-        restaurant = service.find_one(id)
+        restaurant = service.find_with_review(id)
         return restaurant
 
     @api.expect(restaurant_request)
@@ -64,3 +58,11 @@ class RestaurantItem(Resource):
         return None, 204
 
 
+@ns.route('/kakao/<id>')
+@api.response(404, 'Restaurant not found.')
+class KakaoRestaurantItem(Resource):
+
+    @api.marshal_with(restaurant_with_review)
+    def get(self, id):
+        restaurant = service.find_with_kakaomap_id(id)
+        return restaurant
