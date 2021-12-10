@@ -25,7 +25,7 @@ class Restaurant(Base):
     id = Column(String(120), primary_key=True, default=lambda: str(uuid.uuid4()))
     name = Column(String(120), nullable=False)
     kakaomap_id = Column(String(120), nullable=True)
-    reviews = Column(String(120), nullable=True)
+    reviews = Column(Integer(), nullable=True)
     rating_avg = Column(Float(), nullable=True)
     latitude = Column(Float(), nullable=True)
     longitude = Column(Float(), nullable=True)
